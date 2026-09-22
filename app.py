@@ -127,7 +127,7 @@ html, body, [data-testid="stAppViewContainer"] {{
 
 .hero-box {{
     position: relative;
-    min-height: 220px;
+    min-height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -229,6 +229,75 @@ html, body, [data-testid="stAppViewContainer"] {{
     color: #9ca3af;
     font-size: .65rem;
     margin-top: 2px;
+}}
+
+/* Professional Search Bar Container Styling */
+div[data-testid="stHorizontalBlock"]:has(input) {{
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.92) 0%, rgba(3, 7, 18, 0.96) 100%) !important;
+    border: 1.2px solid rgba(56, 189, 248, 0.4) !important;
+    border-radius: 999px !important;
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(56, 189, 248, 0.2) !important;
+    backdrop-filter: blur(18px) !important;
+    padding: 0 16px 0 24px !important;
+    align-items: center !important;
+    height: 56px !important;
+    max-width: 760px !important;
+    margin: 0 auto !important;
+}}
+
+div[data-testid="stTextInput"], div[data-testid="stTextInput"] * {{
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    color: #ffffff !important;
+    font-size: 0.95rem !important;
+}}
+
+div[data-testid="stFileUploader"] {{
+    background: transparent !important;
+    border: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}}
+
+div[data-testid="stFileUploader"] section, div[data-testid="stFileUploaderDropzone"] {{
+    padding: 0 !important;
+    min-height: unset !important;
+    border: none !important;
+    background: transparent !important;
+}}
+
+div[data-testid="stFileUploaderDropzoneInstructions"], div[data-testid="stFileUploaderDropzone"] > div:not(:has(button)) {{
+    display: none !important;
+}}
+
+div[data-testid="stFileUploader"] button {{
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    opacity: 0.85 !important;
+    transition: transform 0.2s ease !important;
+}}
+div[data-testid="stFileUploader"] button:hover {{
+    transform: scale(1.15) !important;
+    opacity: 1 !important;
+}}
+div[data-testid="stFileUploader"] button:before {{
+    content: "📷";
+    font-size: 1.2rem;
+}}
+div[data-testid="stFileUploader"] button span, div[data-testid="stFileUploader"] button p, div[data-testid="stFileUploaderFile"] {{
+    display: none !important;
+}}
+
+/* Hide default form submit button since search triggers on enter/clean layout */
+div[data-testid="stFormSubmitButton"] {{
+    display: none !important;
 }}
 
 .car-card {{
@@ -519,7 +588,6 @@ def add_valuation_columns(results_df: pd.DataFrame, query: str = "") -> pd.DataF
             for c in num_cols:
                 eval_df[c] = pd.to_numeric(eval_df.get(c, 0), errors="coerce").fillna(medians.get(c, 0))
 
-            # Title Case categorical features for CatBoost
             for c in cat_cols:
                 eval_df[c] = eval_df.get(c, "Missing").fillna("Missing").astype(str).str.title()
 
@@ -606,7 +674,7 @@ def hybrid_search(user_query: str = "", top_k: int = 6):
         "elantra": "elantra", "النترا": "elantra", "إلنترا": "elantra",
         "accent": "accent", "اكسنت": "accent",
         "pegas": "pegas", "بيجاس": "pegas",
-        "yaris": "yaris", "ياريس": "yaris",
+        "yaris": "yaris", "ياريس": "ياريس",
         "fortuner": "fortuner", "فورتشنر": "fortuner"
     }
 
@@ -649,13 +717,13 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 with st.form("search_form", clear_on_submit=False):
-    c_in, c_up = st.columns([0.85, 0.15])
+    c_in, c_up = st.columns([0.91, 0.09])
     with c_in:
         user_query = st.text_input("Search", placeholder="Type your car requirements and press Enter...", label_visibility="collapsed")
     with c_up:
-        uploaded_file = st.file_uploader("Upload Image", type=["jpg", "jpeg", "png"], label_visibility="collapsed")
-
-    submitted = st.form_submit_button("Search Market", use_container_width=True)
+        uploaded_file = st.file_uploader("Upload", type=["jpg", "jpeg", "png"], label_visibility="collapsed")
+    
+    submitted = st.form_submit_button("Search", use_container_width=True)
 
 if submitted or user_query or uploaded_file:
     det_car = ""
@@ -749,6 +817,6 @@ if submitted or user_query or uploaded_file:
 else:
     st.markdown("""
     <div style="text-align: center; color: #8b929a; margin-top: 50px;">
-        <p style="font-size: 0.95rem;">Type your search query above and press <strong>Enter</strong> for instant search, or upload a car image 📷</p>
+        <p style="font-size: 0.95rem;">Type your search query above and press <strong>Enter</strong> for instant search, or click the camera icon 📷 to analyze a car photo</p>
     </div>
     """, unsafe_allow_html=True)
