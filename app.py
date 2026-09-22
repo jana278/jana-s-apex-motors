@@ -127,7 +127,7 @@ html, body, [data-testid="stAppViewContainer"] {{
 
 .hero-box {{
     position: relative;
-    min-height: 200px;
+    min-height: 220px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -196,6 +196,8 @@ html, body, [data-testid="stAppViewContainer"] {{
 }}
 
 .feature-row {{
+    position: relative;
+    z-index: 3;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     max-width: 760px;
@@ -231,7 +233,11 @@ html, body, [data-testid="stAppViewContainer"] {{
     margin-top: 2px;
 }}
 
-/* Professional Search Bar Container Styling */
+div[data-testid="stHorizontalBlock"] {{
+    background: transparent !important;
+    border: none !important;
+}}
+
 div[data-testid="stHorizontalBlock"]:has(input) {{
     background: linear-gradient(180deg, rgba(15, 23, 42, 0.92) 0%, rgba(3, 7, 18, 0.96) 100%) !important;
     border: 1.2px solid rgba(56, 189, 248, 0.4) !important;
@@ -240,7 +246,7 @@ div[data-testid="stHorizontalBlock"]:has(input) {{
     backdrop-filter: blur(18px) !important;
     padding: 0 16px 0 24px !important;
     align-items: center !important;
-    height: 56px !important;
+    height: 54px !important;
     max-width: 760px !important;
     margin: 0 auto !important;
 }}
@@ -252,6 +258,8 @@ div[data-testid="stTextInput"], div[data-testid="stTextInput"] * {{
     outline: none !important;
     color: #ffffff !important;
     font-size: 0.95rem !important;
+    direction: ltr !important;
+    text-align: left !important;
 }}
 
 div[data-testid="stFileUploader"] {{
@@ -284,18 +292,17 @@ div[data-testid="stFileUploader"] button {{
     transition: transform 0.2s ease !important;
 }}
 div[data-testid="stFileUploader"] button:hover {{
-    transform: scale(1.15) !important;
+    transform: scale(1.2) !important;
     opacity: 1 !important;
 }}
 div[data-testid="stFileUploader"] button:before {{
     content: "📷";
-    font-size: 1.2rem;
+    font-size: 1.25rem;
 }}
 div[data-testid="stFileUploader"] button span, div[data-testid="stFileUploader"] button p, div[data-testid="stFileUploaderFile"] {{
     display: none !important;
 }}
 
-/* Hide default form submit button since search triggers on enter/clean layout */
 div[data-testid="stFormSubmitButton"] {{
     display: none !important;
 }}
